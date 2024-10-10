@@ -1,6 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from "../Assets/img/argentBankLogo.png"
+import logo from "../Assets/img/argentBankLogo.png";
+
+
+const logChange = document.querySelector(".main-nav-item");
+
+
+/*Modifier page*/
+
+if (localStorage.getItem('token')) {
+    logChange.innerText = "logout";
+    logChange.addEventListener("click", ()=>{
+        localStorage.removeItem("token");
+        window.location.href = "index.html";
+    })
+
+}
 
 function Header(){
 

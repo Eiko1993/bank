@@ -2,12 +2,14 @@
 import "../Assets/css/main.css";
 import Banner from "../Components/Banner";
 import Features from "../Components/Features";
+import background from "../Assets/img/bank-tree.jpeg";
+
 
 function Home(){
     return(
         <div>
-            <Banner />
-            <Features />
+                <Banner img={background} />
+                <Features />
         </div>
     )
 }
