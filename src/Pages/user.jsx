@@ -1,3 +1,12 @@
-import { useState } from "react";
-import { Provider } from "react-redux";
-import "../../css/main.css";
+import "../Assets/css/main.css";
+import User from "../Components/User";
+
+function UserPage(){
+    return(
+        <div>
+            <User />
+        </div>
+    )
+}
+
+export default UserPage;

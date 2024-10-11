@@ -1,9 +1,11 @@
 import React from 'react';
-import "../../css/main.css";
+import "../Assets/css/main.css";
+
 
 function User(){
     return(
-        <><section className="account">
+        <>
+        <section className="account">
         <div className="account-content-wrapper">
           <h3 className="account-title">Argent Bank Checking (x8349)</h3>
           <p className="account-amount">$2,082.79</p>
@@ -30,7 +32,8 @@ function User(){
           <div className="account-content-wrapper cta">
             <button className="transaction-button">View transactions</button>
           </div>
-        </section></>
+        </section>
+        </>
     )
 }
 
