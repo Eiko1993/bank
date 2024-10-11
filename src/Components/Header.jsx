@@ -4,21 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from "../Assets/img/argentBankLogo.png";
 
 
-/*const logChange = document.querySelector(".main-nav-item");*/
-/*let user = window.localStorage.getItem("user");*/
 
-
-
-/*Modifier page*/
-
-/*if (localStorage.getItem('token')) {
-    logChange.innerText = "Sign Out";
-    logChange.addEventListener("click", ()=>{
-        localStorage.removeItem("token");
-        window.location.href = "/";
-        logChange.innerText= "Sign In";
-    })
-}*/
 
 function Header(){
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if user is logged in

@@ -1,15 +1,11 @@
-import { Provider } from "react-redux";
-import "../../css/main.css";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+/*import { Provider } from "react-redux";*/
+import "../Assets/css/main.css";
 import SignInForm from "../Components/SignInForm";
 
 function SignIn(){
     return(
-        <div>
-            <Header />
+        <div className="bg-dark">
             <SignInForm />
-            <Footer />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import User from "../Components/User";
 
 function UserPage(){
     return(
-        <div>
+        <div className="bg-dark">
             <User />
         </div>
     )
