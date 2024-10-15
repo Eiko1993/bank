@@ -2,27 +2,24 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/authReducer';
 
-
 function SignInForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {loading, error} = useSelector((state=>state.user));
     const dispatch = useDispatch();
-
+  
+    const { loading, error } = useSelector((state) => state.user);
+  
     const handleSubmit = (e) => {
-        e.preventDefault();
-        let userParams={email,password};
-        
-        dispatch(loginUser(userParams)).then((result)=>{
-            if(result.payload){
-                setEmail('');
-                setPassword('');
-                window.location.href = "/user";           
-            }
-        })
-      };
-
-
+      e.preventDefault();
+  
+      // Dispatch the loginUser thunk
+      dispatch(loginUser({ email, password })).then((result) => {
+        if (result.meta.requestStatus === 'fulfilled') {
+          // Redirect to the user page on successful login
+          window.location.href = '/user';
+        }
+      });
+    };
     return (
       <div className='main bg-dark'>
         <section className="sign-in-content main bg-dark">
@@ -51,8 +48,8 @@ function SignInForm() {
                     <input type="checkbox" id="remember-me" />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
-                <button className="sign-in-button" type="submit">Sign In
-                    {loading?'Loading...':''}
+                <button className="sign-in-button" type="submit" disabled={loading}>
+                {loading ? 'Loading...' : 'Sign In'}                
                 </button>
                 {error&&(
                     <div className='error-message'>{error}</div>

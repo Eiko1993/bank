@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from "../Assets/img/argentBankLogo.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/authReducer';
-import { useNavigate } from 'react-router-dom';
 
 
 function Header(){
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);
 
+
   const handleSignOut = () => {
-    dispatch(logoutUser());
-    navigate('/');
+    dispatch(logoutUser()).then(() => {
+      window.location.href = '/';
+    });
   };
    return(
     <header>
@@ -25,7 +25,8 @@ function Header(){
         <div>
          {token ? (
             <button className="main-nav-item" onClick={handleSignOut}>
-              <i className="fa fa-sign-out"></i> 
+              <i className="fa fa-sign-out"></i>
+                Sign Out
             </button>
         ):(
             <Link to="/sign-in" className="main-nav-item">

@@ -1,5 +1,4 @@
 // Reducteur pour la connexion utilisateur
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 
@@ -48,17 +47,12 @@ const initialState = {
 
 const loginSlice = createSlice({
   name: 'user',
-  initialState:{
-    loading: false,
-    user: null,
-    error: null
-  },
+  initialState,
   reducers:{},
   extraReducers:(builder)=>{
     builder
     .addCase(loginUser.pending,(state) =>{
         state.loading = true;
-        state.user = null;
         state.error = null
     })
     .addCase(loginUser.fulfilled,(state,action)=>{
@@ -69,15 +63,12 @@ const loginSlice = createSlice({
     })
     .addCase(loginUser.rejected,(state,action)=>{
         state.loading = false;
-        state.user = null;
-        state.token = null;
-        state.error = action.error.message || 'Login failed'; // Handle error message
+        state.error = action.payload || 'Login failed'; // Handle error message
     })
     // Handle logout
     .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
         state.token = null;
-        state.status = 'idle';
     })
   },
 });
