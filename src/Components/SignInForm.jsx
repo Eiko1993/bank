@@ -1,36 +1,30 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/authReducer';
+
 
 function SignInForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const {loading, error} = useSelector((state=>state.user));
+    const dispatch = useDispatch();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); 
-
-        try {
-            const response = await fetch("http://localhost:3001/api/v1/user/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password }) 
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('token', data.token); 
-                window.location.href = "/user"; 
-            } else {
-                setErrorMessage('Erreur dans l’identifiant ou le mot de passe'); 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let userParams={email,password};
+        
+        dispatch(loginUser(userParams)).then((result)=>{
+            if(result.payload){
+                setEmail('');
+                setPassword('');
+                window.location.href = "/user";           
             }
-        } catch (error) {
-            console.log('Error: ' + error);
-            setErrorMessage('An error occurred. Please try again.');
-        }
-    };
+        })
+      };
+
 
     return (
+      <div className='main bg-dark'>
         <section className="sign-in-content main bg-dark">
             <i className="fa fa-user-circle sign-in-icon"></i>
             <h1>Sign In</h1>
@@ -57,10 +51,15 @@ function SignInForm() {
                     <input type="checkbox" id="remember-me" />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
-                {errorMessage && <p className="error-message">{errorMessage}</p>} 
-                <button className="sign-in-button" type="submit">Sign In</button>
+                <button className="sign-in-button" type="submit">Sign In
+                    {loading?'Loading...':''}
+                </button>
+                {error&&(
+                    <div className='error-message'>{error}</div>
+                )}
             </form>
         </section>
+        </div>  
     );
 }
 

@@ -1,0 +1,1 @@
+// Reducteur pour l'édition du nom de l'utilisateur
