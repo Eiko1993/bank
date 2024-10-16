@@ -1,11 +1,11 @@
 // Magasin avec tous les reducers
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './/authReducer';
-import profileReducer from './/editReducer'
+import authReducer from './/authReducer';
+import editReducer from './/editReducer'
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
-    profile: profileReducer
+    user: authReducer,
+    profile: editReducer
   },
 });

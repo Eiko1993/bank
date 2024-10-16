@@ -51,6 +51,7 @@ const loginSlice = createSlice({
   reducers:{},
   extraReducers:(builder)=>{
     builder
+    // Handle login
     .addCase(loginUser.pending,(state) =>{
         state.loading = true;
         state.error = null

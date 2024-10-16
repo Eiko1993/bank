@@ -20,7 +20,7 @@ export const fetchUserProfile = createAsyncThunk(
             });
       
             if (!response.ok) {
-              throw new Error('Failed to fetch user user');
+              throw new Error('Failed to fetch user');
             }
       
             const data = await response.json();
@@ -80,6 +80,21 @@ const initialState = {
     extraReducers: (builder) => {
       builder
         
+        .addCase(fetchUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+    })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload; // Save the profile data
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to load user profile';
+      })
+
+
+
         .addCase(editUsername.pending, (state) => {
           state.loading = true;
           state.error = null;

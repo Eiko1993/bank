@@ -49,7 +49,7 @@ function SignInForm() {
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
                 <button className="sign-in-button" type="submit" disabled={loading}>
-                {loading ? 'Loading...' : 'Sign In'}                
+                {loading ? 'Signing In...' : 'Sign In'}                
                 </button>
                 {error&&(
                     <div className='error-message'>{error}</div>
