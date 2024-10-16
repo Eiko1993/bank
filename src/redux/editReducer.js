@@ -80,6 +80,7 @@ const initialState = {
     extraReducers: (builder) => {
       builder
         
+      //Fetching user's profile
         .addCase(fetchUserProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -94,7 +95,7 @@ const initialState = {
       })
 
 
-
+      //Editing username
         .addCase(editUsername.pending, (state) => {
           state.loading = true;
           state.error = null;
