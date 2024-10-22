@@ -11,7 +11,7 @@ export const fetchUserProfile = createAsyncThunk(
           return rejectWithValue('No token found');
         }
         try {
-            const response = await fetch('http://localhost:3001/api/v1/user/user', {
+            const response = await fetch('http://localhost:3001/api/v1/user/profile', {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -22,9 +22,11 @@ export const fetchUserProfile = createAsyncThunk(
             if (!response.ok) {
               throw new Error('Failed to fetch user');
             }
-      
+
             const data = await response.json();
-            return data;
+            return data.body;
+      
+
           } catch (error) {
             return rejectWithValue('Something went wrong fetching the user.');
           }
@@ -42,13 +44,13 @@ export const editUsername = createAsyncThunk(
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/v1/user/user', {
+      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: newUsername }), // Send the new username
+        body: JSON.stringify({ userName: newUsername }), // Send the new username
       });
 
       if (!response.ok) {
@@ -63,17 +65,22 @@ export const editUsername = createAsyncThunk(
     }
   }
 );
-// Initial state for user
-const initialState = {
-    user: null,
-    loading: false,
-    error: null,
-  };
+
   
   // Profile slice
   const profileSlice = createSlice({
-    name: 'user',
-    initialState,
+    name: 'profile',
+    initialState:{
+      user: {
+        id: '',           
+        email: '',  
+        userName: '',  
+        firstName: '',
+        lastName: '', 
+      },
+        loading: false,
+        error: null,
+      },
     reducers: {
     
     },
@@ -83,12 +90,16 @@ const initialState = {
       //Fetching user's profile
         .addCase(fetchUserProfile.pending, (state) => {
         state.loading = true;
-        state.error = null;
     })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; // Save the profile data
-      })
+        state.user = {
+          userName: action.payload.body.userName,
+          firstName: action.payload.body.firstName,
+          lastName: action.payload.body.lastName,
+        };
+      
+    })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to load user profile';
@@ -103,8 +114,7 @@ const initialState = {
         .addCase(editUsername.fulfilled, (state, action) => {
           state.loading = false;
           state.user = {
-            ...state.user,
-            username: action.payload.username, // Update the username
+            userName: action.payload.userName, // Update the username
           };
         })
         .addCase(editUsername.rejected, (state, action) => {

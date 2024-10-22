@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/authReducer';
+import {useNavigate } from 'react-router-dom';
 
 function SignInForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [ isFormSubmitted, setIsFormSubmitted] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
   
-    const { loading, error } = useSelector((state) => state.user);
+    const { isConnected, error } = useSelector((state) => state.user);
   
     const handleSubmit = (e) => {
-      e.preventDefault();
-  
-      // Dispatch the loginUser thunk
-      dispatch(loginUser({ email, password })).then((result) => {
-        if (result.meta.requestStatus === 'fulfilled') {
-          // Redirect to the user page on successful login
-          window.location.href = '/user';
+        e.preventDefault();
+
+        const loginData = {
+            email: email,
+            password: password
         }
-      });
+  
+        // Dispatch the loginUser thunk
+        dispatch(loginUser(loginData));
+        setIsFormSubmitted(true);
     };
+    useEffect(() => {
+        if (isConnected) {
+            navigate('/user');
+        }
+    }, [isConnected, navigate]);
+
     return (
       <div className='main bg-dark'>
         <section className="sign-in-content main bg-dark">
@@ -48,8 +58,8 @@ function SignInForm() {
                     <input type="checkbox" id="remember-me" />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
-                <button className="sign-in-button" type="submit" disabled={loading}>
-                {loading ? 'Signing In...' : 'Sign In'}                
+                <button className="sign-in-button" type="submit" disabled={isConnected}>
+                {isConnected ? 'Signing In...' : 'Sign In'}                
                 </button>
                 {error&&(
                     <div className='error-message'>{error}</div>

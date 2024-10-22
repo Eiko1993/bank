@@ -18,13 +18,21 @@ export const loginUser = createAsyncThunk(
           },
           body: JSON.stringify(userParams),
         });
-        if (!response.ok){
-            const errorData = await response.json(); 
-            return rejectWithValue(errorData.message || 'Login failed');
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          return rejectWithValue(responseData.message || 'Login failed');
         }
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        return data;
+        const token = responseData.body.token;
+
+        if (token){
+          localStorage.setItem('token', token);
+        }
+        return {
+          email: responseData.body.email,
+          token: token,
+        };
       } catch (error) {
         return rejectWithValue('Something went wrong. Please try again later.');
       }
@@ -37,39 +45,33 @@ export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
   return {}; 
 });
 
-// Initial state
-const initialState = {
-  user: null,
-  token: localStorage.getItem('token') || null, 
-  status: 'idle', 
-  error: null,
-};
 
 const loginSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: {
+    email: '',
+    password: '',
+    token: '',
+    isConnected: false, 
+    error: null,
+  },
   reducers:{},
   extraReducers:(builder)=>{
     builder
     // Handle login
-    .addCase(loginUser.pending,(state) =>{
-        state.loading = true;
-        state.error = null
+    .addCase(loginUser.pending, (state) => {
+      state.isConnected = false;
+      state.error = null;
     })
-    .addCase(loginUser.fulfilled,(state,action)=>{
-        state.loading = false;
-        state.user = action.payload;
-        state.token = action.payload.token;
-        state.error = null
+    .addCase(loginUser.fulfilled, (state, action) => {
+      state.email = action.payload.email;
+      state.token = action.payload.token;
+      state.isConnected = true;
+      state.error = null;
     })
     .addCase(loginUser.rejected,(state,action)=>{
-        state.loading = false;
+        state.isConnected = false;
         state.error = action.payload || 'Login failed'; // Handle error message
-    })
-    // Handle logout
-    .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
     })
   },
 });

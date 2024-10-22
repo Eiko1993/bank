@@ -5,18 +5,19 @@ import {editUsername, fetchUserProfile} from "../redux/editReducer";
 function NameEdit() {
 const [newUsername, setNewUsername] = useState(''); 
   const dispatch = useDispatch();
-  const { loading, error, user } = useSelector((state) => state.user);
-
-    useEffect(() => {
-        dispatch(fetchUserProfile());
-    }, [dispatch]);
-
-    useEffect(() =>{
-        if (user && user.userName) {
-            setNewUsername(user.userName);
-        }
-    }, [user])
-
+  const { loading, error, user } = useSelector((state) => state.profile);
+  
+  
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    console.log("Fetched user:", user); // Debugging line
+    if (user && user.userName) {
+      setNewUsername(user.userName);
+    }
+  }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +28,11 @@ const [newUsername, setNewUsername] = useState('');
     });
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setNewUsername(user.userName); // Reset to the original username
+  };
+
   return(
     <div>
         <section className='main'>
@@ -34,20 +40,20 @@ const [newUsername, setNewUsername] = useState('');
             <form onSubmit={handleSubmit}>
                 <div className='input-wrapper'>
                     <label htmlFor='username'>User name</label>
-                    <input type='text' id='username' value={newUsername} onChange={(e) => setNewUsername(e.target.value)} placeholder={user.userName} />
+                    <input type='text' id='username' value={newUsername} onChange={(e) => setNewUsername(e.target.value)} placeholder={user?.userName} />
                 </div>
                 <div className='input-wrapper'>
                     <label htmlFor='firstname'>First name</label>
-                    <input type='text' id='firstname' value={newUsername} placeholder={user.firstName} disabled />
+                    <input type='text' id='firstname' value={user?.firstName} placeholder={user?.firstName} disabled />
                 </div>
                 <div className='input-wrapper'>
                     <label htmlFor='lastname'>Last name</label>
-                    <input type='text' id='lastname' value={newUsername} placeholder={user.lastName} disabled />
+                    <input type='text' id='lastname' value={user?.lastName} placeholder={user?.lastName} disabled />
                 </div>
                 <button className="sign-in-button" type="submit" disabled={loading}>
                 {loading ? 'Saving...' : 'Save'}                
                 </button>
-                <button className="sign-in-button" type="submit" disabled={loading}>Cancel</button>
+                <button className="sign-in-button" onClick={handleCancel} disabled={loading}>Cancel</button>
                 {error&&(
                     <div className='error-message'>{error}</div>
                 )}
