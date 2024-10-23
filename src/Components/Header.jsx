@@ -7,7 +7,7 @@ import { fetchUserProfile } from '../redux/editReducer';
 
 function Header(){
   const dispatch = useDispatch();
-  const { user, loading} = useSelector((state) => state.user);
+  const { user: profileUser, loading: profileLoading } = useSelector((state) => state.profile);
   const token = useSelector((state) => state.user.token);
   
   useEffect(() => {
@@ -31,12 +31,12 @@ function Header(){
         <div>
          {token ? (
           <>
-            {loading ? (
+            {profileLoading ? (
               <p className='main-nav-item'>Loading...</p>
             ) : (
-              user && user.userName ? (
+              profileUser && profileUser.userName ? (
                 <p className='main-nav-item'>
-                  <i className="fa fa-user-circle"></i> {user.userName}
+                  <i className="fa fa-user-circle"></i> {profileUser.userName}
                 </p>
               ) : null
             )}

@@ -53,6 +53,7 @@ body {
 
 .main-nav-item {
   text-decoration: none;
+  display: contents;
   margin-right: 0.5rem;
 }
 
@@ -217,10 +218,10 @@ body {
   display: block;
   width: 100%;
   padding: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1rem;
   margin-top: 1rem;
   border-color: #00bc77;
+  border-radius: 5px;
   background-color: #00bc77;
   color: #fff;
 }
