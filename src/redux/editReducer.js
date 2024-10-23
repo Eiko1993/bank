@@ -4,8 +4,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 //Thunk to get username
 export const fetchUserProfile = createAsyncThunk(
     'user/fetchUserProfile',
-    async (_, { getState, rejectWithValue }) => {
-        const token = getState().user.token;
+    async (_, {  rejectWithValue }) => {
+
+        const token = localStorage.getItem('token')
     
         if (!token) {
           return rejectWithValue('No token found');
@@ -37,7 +38,7 @@ export const fetchUserProfile = createAsyncThunk(
 export const editUsername = createAsyncThunk(
   'user/editUsername',
   async (newUsername, { getState, rejectWithValue }) => {
-    const token = getState().user.token; // Get token from Redux state
+    const token = localStorage.getItem('token') 
 
     if (!token) {
       return rejectWithValue('No token found');
@@ -59,7 +60,7 @@ export const editUsername = createAsyncThunk(
       }
 
       const data = await response.json();
-      return data;
+      return data.body;
     } catch (error) {
       return rejectWithValue('Something went wrong while updating the username.');
     }
@@ -70,13 +71,12 @@ export const editUsername = createAsyncThunk(
   // Profile slice
   const profileSlice = createSlice({
     name: 'profile',
-    initialState:{
+    initialState: {
       user: {
-        id: '',           
-        email: '',  
         userName: '',  
         firstName: '',
-        lastName: '', 
+        lastName: '',
+        email: '',  
       },
         loading: false,
         error: null,
@@ -90,15 +90,11 @@ export const editUsername = createAsyncThunk(
       //Fetching user's profile
         .addCase(fetchUserProfile.pending, (state) => {
         state.loading = true;
+        state.error = null;
     })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = {
-          userName: action.payload.body.userName,
-          firstName: action.payload.body.firstName,
-          lastName: action.payload.body.lastName,
-        };
-      
+        state.user = action.payload;
     })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.loading = false;
@@ -113,9 +109,7 @@ export const editUsername = createAsyncThunk(
         })
         .addCase(editUsername.fulfilled, (state, action) => {
           state.loading = false;
-          state.user = {
-            userName: action.payload.userName, // Update the username
-          };
+          state.user.userName = action.payload.userName;
         })
         .addCase(editUsername.rejected, (state, action) => {
           state.loading = false;

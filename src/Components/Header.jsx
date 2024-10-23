@@ -31,13 +31,19 @@ function Header(){
         <div>
          {token ? (
           <>
-          {!loading && user &&(
-            <span className='main-nav-item'>{user.userName}</span>
-          )}
-            <button className="main-nav-item" onClick={handleSignOut}>
-              <i className="fa fa-sign-out"></i>
-                Sign Out
-            </button>
+            {loading ? (
+              <p className='main-nav-item'>Loading...</p>
+            ) : (
+              user && user.userName ? (
+                <p className='main-nav-item'>
+                  <i className="fa fa-user-circle"></i> {user.userName}
+                </p>
+              ) : null
+            )}
+            <Link to="/sign-in" className="main-nav-item" onClick={handleSignOut}>
+            <i className="fa fa-user-circle"></i>
+            Sign Out
+        </Link>
           </>
         ):(
             <Link to="/sign-in" className="main-nav-item">

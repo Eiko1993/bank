@@ -35,30 +35,35 @@ const [newUsername, setNewUsername] = useState('');
 
   return(
     <div>
-        <section className='main'>
+      <>
+        <section className='edit-content'>
             <h1>Edit user info</h1>
             <form onSubmit={handleSubmit}>
-                <div className='input-wrapper'>
-                    <label htmlFor='username'>User name</label>
+                <div className='input-wrapper-edit'>
+                    <label htmlFor='username'>User name: </label>
                     <input type='text' id='username' value={newUsername} onChange={(e) => setNewUsername(e.target.value)} placeholder={user?.userName} />
                 </div>
-                <div className='input-wrapper'>
-                    <label htmlFor='firstname'>First name</label>
+                <div className='input-wrapper-edit'>
+                    <label htmlFor='firstname'>First name: </label>
                     <input type='text' id='firstname' value={user?.firstName} placeholder={user?.firstName} disabled />
                 </div>
-                <div className='input-wrapper'>
-                    <label htmlFor='lastname'>Last name</label>
+                <div className='input-wrapper-edit'>
+                    <label htmlFor='lastname'>Last name: </label>
                     <input type='text' id='lastname' value={user?.lastName} placeholder={user?.lastName} disabled />
                 </div>
-                <button className="sign-in-button" type="submit" disabled={loading}>
+                <div className='input-wrapper-edit'>
+                <button className="edit-button" type="submit" disabled={loading}>
                 {loading ? 'Saving...' : 'Save'}                
                 </button>
-                <button className="sign-in-button" onClick={handleCancel} disabled={loading}>Cancel</button>
+                <button className="edit-button" onClick={handleCancel} disabled={loading}>Cancel
+                </button>
+                </div>
                 {error&&(
                     <div className='error-message'>{error}</div>
                 )}
             </form>
         </section>
+        </>
     </div>
   )
 }

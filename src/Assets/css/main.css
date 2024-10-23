@@ -202,6 +202,45 @@ body {
   font-size: 1.2rem;
 }
 
+.edit-content {
+  box-sizing: border-box;
+  background-color: white;
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 2rem;
+}
+
+.edit-button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+}
+
+.input-wrapper-edit {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  margin-bottom: 1rem;
+  gap: 10px;
+}
+
+.input-wrapper-edit label {
+  font-weight: bold;
+}
+
+.input-wrapper-edit input {
+  font-size: 1rem;
+}
+
 .footer {
   display: flex;
   justify-content: center;
@@ -218,8 +257,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
-  background-color: #fff;
+  background-color: rgb(85, 85, 85);
+  border-radius: 10px;
   width: 80%;
   margin: 0 auto;
   flex-direction: column;
@@ -249,6 +288,7 @@ body {
 .account-content-wrapper {
   width: 100%;
   flex: 1;
+  color: #fff;
 }
 
 .edit-button {
