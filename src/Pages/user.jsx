@@ -4,9 +4,9 @@ import NameEdit from "../Components/NameEdit";
 
 function UserPage(){
     return(
-        <div>
+        <div className="bg-dark">
             <NameEdit />
-            <User className="bg-dark" />
+            <User />
         </div>
     )
 }
