@@ -1,5 +1,6 @@
 import React from 'react';
 import "../Assets/css/main.css";
+import { useSelector } from 'react-redux';
 
 
 function User(){
@@ -9,7 +10,7 @@ function User(){
   if (!token) {
     return <p className="error-message">Vous devez être connecté pour voir les informations du compte.</p>;
   }
-  
+
     return(
         <>
         <section className="account">
