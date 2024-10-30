@@ -3,6 +3,13 @@ import "../Assets/css/main.css";
 
 
 function User(){
+  const token = useSelector((state) => state.user.token);
+
+
+  if (!token) {
+    return <p className="error-message">Vous devez être connecté pour voir les informations du compte.</p>;
+  }
+  
     return(
         <>
         <section className="account">
