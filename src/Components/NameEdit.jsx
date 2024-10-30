@@ -44,7 +44,7 @@ function NameEdit() {
 
 
   if (!token) {
-    return;
+    return null;
   }
   
   return (

@@ -12,6 +12,22 @@ tags:
     description: Tous sur vos transactions
 
 paths:
+
+  /accounts:
+   get:
+      summary: Obtient les comptes
+      description: Permet de visualiser les comptes.
+      responses:
+        '200':
+          description: Détails des comptes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Comptes non trouvé
+
+
   /accounts/{accountId}/transactions:
     parameters:
       - in: path
@@ -45,27 +61,7 @@ paths:
           description: Compte non trouvé
 
 
-    post:
-      summary: Ajoute des informations à une transaction existante
-      description: Permet d'ajouter des informations complémentaires à une transaction spécifique.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionUpdate'
-      responses:
-        '200':
-          description: Informations de la transaction mises à jour avec succès
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Transaction'
-        '400':
-          description: Requête invalide
-        '404':
-          description: Transaction non trouvée
-
+  
 
   /accounts/{accountId}/transactions/{transactionId}:
     parameters:
@@ -153,6 +149,13 @@ components:
         category:
           type: string
           description: Catégorie de la transaction.
+        transactiontype:
+          type: string
+          description: Type de la transaction
+        balance:
+         type: number
+         description: Balance de la transaction
+          
 
     TransactionUpdate:
       type: object
@@ -163,3 +166,9 @@ components:
         category:
           type: string
           description: Mise à jour de la catégorie de la transaction.
+        transactiontype:
+          type: string
+          description: Type de la transaction
+        balance:
+          type: number
+          description: Balance de la transaction

@@ -33,7 +33,7 @@ function Header(){
         </Link>
         <div>
          {token ? (
-          <>
+          <div className='items'>
             {profileLoading ? (
               <p className='main-nav-item'>Loading...</p>
             ) : (
@@ -47,9 +47,9 @@ function Header(){
             <i className="fa fa-user-circle"></i>
             Sign Out
         </Link>
-          </>
+          </div>
         ):(
-            <Link to="/sign-in" className="main-nav-item">
+            <Link to="/sign-in" className="main-nav-item items">
             <i className="fa fa-user-circle"></i>
             Sign In
         </Link>

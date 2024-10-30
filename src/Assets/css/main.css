@@ -43,12 +43,25 @@ body {
 }
 
 .main-nav a {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.main-nav p {
   font-weight: bold;
   color: #2c3e50;
 }
 
 .main-nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.items{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .main-nav-item {
@@ -204,7 +217,8 @@ body {
 
 .edit-content {
   box-sizing: border-box;
-  background-color: white;
+  background-color: #12002b;
+  color: #fff;
   width: 400px;
   margin: 0 auto;
   margin-top: 1rem;
