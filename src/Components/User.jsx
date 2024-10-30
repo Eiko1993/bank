@@ -8,7 +8,7 @@ function User(){
 
 
   if (!token) {
-    return <p className="error-message">Vous devez être connecté pour voir les informations du compte.</p>;
+    return <p className='no-token'>Vous devez être connecté pour voir les informations du compte.</p>;
   }
 
     return(

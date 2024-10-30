@@ -21,6 +21,9 @@ function Header(){
       window.location.href = '/';
     });
   };
+
+
+  
    return(
     <header>
         <nav className="main-nav">

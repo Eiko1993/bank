@@ -7,6 +7,9 @@ function NameEdit() {
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.profile);
   const [editName, seteditName] = useState(false);
+  const token = useSelector((state) => state.user.token);
+
+
 
   const displayContent = () => {
     seteditName(!editName);
@@ -39,6 +42,11 @@ function NameEdit() {
     seteditName(false);
   };
 
+
+  if (!token) {
+    return;
+  }
+  
   return (
     <div>
       <section className='edit-content'>
